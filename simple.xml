@@ -1,0 +1,41 @@
+<project name="Test" default="run" >
+
+	<property name="bin.dir" value="bin" />
+	<property name="test.dir" value="src\icecream\" />
+	<property name="jar.dir" value="${bin.dir}/jar" />
+	<property name="icecream.dir" value="${jar.dir}/icecream.jar" />
+
+				<target name = "clean">
+					<delete dir="${bin.dir}" />
+					<echo>Clean!</echo>
+				</target>
+				
+                 <target name="compile">
+                         <mkdir dir="${bin.dir}"/>
+						 <javac srcdir = "${test.dir}" destdir = "${bin.dir}\" />
+						 <echo>Compile!</echo>
+                 </target>
+				 
+				<target name="clean_compile" depends="clean, compile">
+						<echo>Clean and compile!</echo>
+                </target>	
+				
+				<target name="test.jar" depends="clean_compile">
+						<mkdir dir="jar.dir"/>
+						<jar destfile="${icecream.dir}" basedir = "${bin.dir}">
+                                <manifest>
+									<attribute name = "Main-Class" value = "icecream.IceCream" />
+								</manifest>
+                         </jar>
+						 <echo>Make jar!</echo>
+                 </target>
+				 
+				 <target name="run" depends="test.jar">
+					<java jar="${icecream.dir}" fork="true" />
+					<echo>Success!</echo>
+				 </target>
+
+                 
+           </project>
+
+
